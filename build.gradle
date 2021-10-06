@@ -1,34 +1,62 @@
 plugins {
     id 'java'
+
+    // Включает плагин для запуска приложения
     id 'application'
+
+    // Включает плагин для проверки качества кода
     id 'ru.vyarus.quality' version '4.6.0'
+
+    // Включает плагин для бенчмарков (JMH)
+    id "me.champeau.jmh" version "0.6.6"
 }
 
+// Название группы, к которой относится проект
+// Группа это например компания, организация или команда
 group 'org.example'
+
+// Версия проекта
 version '1.0-SNAPSHOT'
 
+// Подключаем стандартный репозиторий Maven Central, в котором будут искаться зависимости
 repositories {
     mavenCentral()
 }
 
+// Подключенные зависимости для приложения
+// Виды зависимостей смотрите тут:
+// https://docs.gradle.org/current/userguide/declaring_dependencies.html#sec:dependency-types
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 }
 
+// Настройки для тестирования
 test {
+    // Используем JUnit 5
     useJUnitPlatform()
 }
 
+// Настройки для плагина application
 application {
+    // Указываем главный класс приложения
     mainClass = 'sevsu.Main'
 }
 
+// Настройки для задачи run
 run {
+    // Подключаем стандартный поток ввода
     standardInput = System.in
 }
 
+// Настройки для плагина quality
 quality {
     pmd = false
     strict = false
+}
+
+jmh {
+    fork = 1
+    warmupIterations = 1
+    iterations = 2
 }
